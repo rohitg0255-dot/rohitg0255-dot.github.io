@@ -1,0 +1,6 @@
+# Allow all bots to crawl the entire site
+User-agent: *
+Disallow:
+
+# Link to the sitemap
+Sitemap: https://www.rohitg0255-dot.github.io/sitemap.txt
