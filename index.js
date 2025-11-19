@@ -57,7 +57,56 @@ const updatecomponent = (name, e) => {
       p.innerText = "Unknown status";
   }
 };
+
+window.onload = () => {
+  // Animate "moveDiv" if it exists
+  const div = document.getElementById("moveDiv");
+  if (div) {
+    div.classList.remove("translate-y-5", "opacity-0");
+    div.classList.add("translate-y-0", "opacity-100");
+  }
+
+  // Animate all slide buttons
+  document.querySelectorAll(".slide-btn").forEach((btn) => {
+    btn.classList.remove("-translate-x-5", "opacity-0");
+    btn.classList.add("translate-x-0", "opacity-100");
+  });
+};
+
 document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("openBtn");
+  const menu = document.getElementById("menu");
+  const closeBtn = document.getElementById("closeBtn");
+  const div = document.getElementById("slideDiv");
+
+  function openPanel() {
+    div.classList.remove("max-h-0", "opacity-0", "-translate-y-10");
+    div.classList.add(
+      "md:max-h-120",
+      "max-h-160",
+      "opacity-100",
+      "translate-y-0"
+    );
+    menu.classList.add("translate-x-0", "opacity-100");
+    menu.classList.remove("-translate-x-5", "opacity-0");
+  }
+
+  function closePanel() {
+    div.classList.add("max-h-0", "opacity-0", "-translate-y-10");
+    div.classList.remove(
+      "md:max-h-120",
+      "max-h-160",
+      "opacity-100",
+      "translate-y-0"
+    );
+    menu.classList.add("-translate-x-5", "opacity-0");
+    menu.classList.remove("translate-x-0", "opacity-100");
+  }
+
+  btn.addEventListener("click", openPanel);
+  closeBtn.addEventListener("click", closePanel);
+  // document.getElementById("openBtn").click();
+
   const instance = document.getElementById("instance");
   if (!instance) return;
   for (let i = 0; i < 50; i++) {

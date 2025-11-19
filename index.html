@@ -14,14 +14,120 @@
     <title>Introduction to Software Development - By Rohit Gurkhe</title>
   </head>
   <body>
+    <p class="text-white text-6xl">
+      I secure, deploy,
+      <span class="text-xl">refactor, and </span>automate with questionable
+      <span class="text-xl">amounts of enthusiasm,</span> making systems
+      smarter, faster, <span class="text-xl"> harder</span> to break,
+      <span class="text-xl">and slightly terrified of my next commit</span>.
+    </p>
+    <div
+      id="slideDiv"
+      class="fixed z-100 top-0 left-0 right-0 max-h-0 overflow-hidden overflow-y-auto scroll-1 bg-white shadow-lg transition-all duration-500 ease-out opacity-0 -translate-y-10"
+    >
+      <!-- Header with close button -->
+      <main class="flex justify-between items-center p-3">
+        <h2
+          id="menu"
+          class="font-semibold text-green-400 transition-all duration-300 ease-out -translate-x-5 opacity-0"
+        >
+          Courses
+        </h2>
+        <button id="closeBtn" class="leading-none px-2 hover:underline text-sm">
+          Close
+        </button>
+      </main>
+      <section class="px-4">
+        <p class="text-3xl">Courses</p>
+        <p class="text-sm">
+          Dive into a world of learning that’s built for innovators. Our
+          platform brings you professionally curated, high-quality courses
+          designed to elevate your skills—from foundational coding principles to
+          advanced software engineering practices. Every learning path is
+          designed to help you grow faster, stay motivated, and build real-world
+          expertise.
+        </p>
+      </section>
+
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 p-4">
+        <div>
+          <h3 class="underline text-green-400">Software Engineering</h3>
+        </div>
+
+        <div>
+          <h3 class="underline text-green-400">Blockchain & Cryptography</h3>
+        </div>
+
+        <div>
+          <h3 class="underline text-blue-400">Cloud Computing</h3>
+          <ul class="text-sm ml-6 text-gray-700 mt-2 space-y-1">
+            <li>AWS, Azure, Google Cloud</li>
+            <li>Serverless Computing</li>
+            <li>Virtualization</li>
+            <li>Cloud Architecture & Design</li>
+            <li>Cloud Deployments</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="underline text-blue-400">DevOps</h3>
+          <ul class="text-sm ml-6 text-gray-700 mt-2 space-y-1">
+            <li>CI/CD Pipelines</li>
+            <li>Docker & Kubernetes</li>
+            <li>Infrastructure as Code</li>
+            <li>Monitoring & Logging</li>
+            <li>Automation Scripting</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="underline text-blue-400">Full Stack Development</h3>
+          <ul class="text-sm ml-6 text-gray-700 mt-2 space-y-1">
+            <li>Frontend (HTML, CSS, React)</li>
+            <li>Backend (Node, Django)</li>
+            <li>APIs & Databases</li>
+            <li>UI/UX</li>
+            <li>Cloud Deployment</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="underline text-blue-400">Artificial Intelligence & ML</h3>
+          <ul class="text-sm ml-6 text-gray-700 mt-2 space-y-1">
+            <li>Machine Learning</li>
+            <li>Deep Learning</li>
+            <li>NLP</li>
+            <li>Computer Vision</li>
+            <li>Generative AI</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="underline text-blue-400">Linux & System Administration</h3>
+          <ul class="text-sm ml-6 text-gray-700 mt-2 space-y-1">
+            <li>Shell Scripting</li>
+            <li>File Systems</li>
+            <li>Networking Basics</li>
+            <li>Permissions & Users</li>
+            <li>Server Administration</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="underline text-green-400">Database Management Systems</h3>
+        </div>
+
+        <div>
+          <h3 class="underline text-green-400">Embedded Systems & IoT</h3>
+        </div>
+      </section>
+    </div>
+
     <nav class="flex justify-end">
       <main
-        class="text-white p-8 text-sm gap-8 max-w-2xl items-center flex sm:flex-row flex-col justify-end"
+        class="text-white p-8 text-sm gap-8 max-w-2xl sm:items-center text-right flex sm:flex-row flex-col"
       >
-        <a href="/about.html" class="text-whites hover:underline">About</a>
-        <a href="/index.html" class="text-whites hover:underline"
-          >Software Development</a
-        >
+        <a href="/about.html" class="hover:underline">About</a>
+        <a id="openBtn" class="hover:underline">Software Development</a>
         <div
           class="flex items-center gap-8 bg-white p-4 rounded-xl border-2 border-blue-400"
         >
@@ -120,9 +226,12 @@
       </main>
     </nav>
 
-    <main class="m-4 flex items-center relative justify-center">
+    <main
+      id="moveDiv"
+      class="m-4 flex items-center relative justify-center transition-all duration-500 ease-out translate-y-5 opacity-0"
+    >
       <main
-        class="p-4 cursor-default space-y-8 bg-white rounded-xl shadow-md max-w-4xl"
+        class="cursor-default p-4 space-y-8 bg-white rounded-xl shadow-md max-w-4xl"
       >
         <div class="flex gap-8 items-center">
           <?xml version="1.0" encoding="utf-8"?><svg
@@ -135,7 +244,7 @@
             viewBox="0 0 122.88 105.47"
             style="enable-background: new 0 0 122.88 105.47"
             xml:space="preserve"
-            width="48"
+            width="21"
           >
             <style type="text/css">
               .st0 {
@@ -152,7 +261,7 @@
           </svg>
 
           <button
-            class="transition-all absolute z-50 hover:text-blue-500 bg-green-400 p-8 duration-300"
+            class="transition-all absolute z-50 hover:text-blue-500 ease-out -translate-x-5 opacity-0 bg-green-400 p-8 duration-300 slide-btn"
             onclick="opencomponent('d')"
             id="introduction"
           >
@@ -200,8 +309,6 @@
           </div>
         </section>
 
-        <hr />
-
         <div class="flex gap-8 items-center">
           <?xml version="1.0" encoding="utf-8"?><svg
             version="1.1"
@@ -229,7 +336,7 @@
             </g>
           </svg>
           <button
-            class="transition-all absolute z-50 hover:text-blue-500 bg-green-400 p-8 duration-300"
+            class="transition-all absolute z-50 slide-btn hover:text-blue-500 ease-out -translate-x-5 opacity-0 bg-green-400 p-8 duration-300"
             onclick="opencomponent('e')"
             id="server"
           >
@@ -331,7 +438,7 @@
           </svg>
 
           <button
-            class="transition-all absolute z-50 hover:text-blue-500 bg-green-400 p-8 duration-300"
+            class="transition-all absolute z-50 hover:text-blue-500 ease-out -translate-x-5 opacity-0 bg-green-400 p-8 duration-300 slide-btn"
             onclick="opencomponent('f')"
             id="javascript"
           >
@@ -394,7 +501,7 @@
           </svg>
 
           <button
-            class="transition-all absolute z-50 hover:text-blue-500 bg-green-400 p-8 duration-300"
+            class="transition-all absolute z-50 hover:text-blue-500 ease-out -translate-x-5 opacity-0 bg-green-400 p-8 duration-300 slide-btn"
             id="component"
             onclick="opencomponent('a')"
           >
@@ -471,7 +578,7 @@
       <img
         src="/man.png"
         alt="man"
-        class="w-50 h-60 rounded-2xl opacity-60f overflow-hidd scale-60 sm:scale-120 animate-blurs"
+        class="w-50 h-60 sm:rounded-2xl rounded-full opacity-60f overflow-hidd scale-60 sm:scale-120 animate-blurs"
       />
       <main class="text-5xl text-green-400 space-y-4">
         <p class="font-bold">Hello I am Rohit</p>

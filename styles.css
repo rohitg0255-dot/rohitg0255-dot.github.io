@@ -4,6 +4,18 @@ body {
   font-size: 21px;
 }
 
+.scroll-1::-webkit-scrollbar {
+  width: 2px;
+}
+
+.scroll-1::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-1::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
 @keyframes blurAnimation {
   0%,
   100% {
