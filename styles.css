@@ -4,6 +4,10 @@ body {
   font-size: 21px;
 }
 
+button {
+  touch-action: manipulation;
+}
+
 .scroll-1::-webkit-scrollbar {
   width: 2px;
 }

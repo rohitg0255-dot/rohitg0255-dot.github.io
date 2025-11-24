@@ -1,76 +1,91 @@
-const opencomponent = (name) => {
-  if (name === "b") e.stopPropagation();
-  let p, e;
-  if (name === "d") {
-    p = document.querySelector("#introduction");
-    e = document.querySelector("#flower");
-  } else if (name === "e") {
-    p = document.querySelector("#server");
-    e = document.querySelector("#index");
-  } else if (name === "f") {
-    p = document.querySelector("#javascript");
-    e = document.querySelector("#block");
-  } else {
-    p = document.querySelector("#component");
-    e = document.querySelector("#element");
-  }
+// =========================
+// GENERATOR FUNCTION
+// =========================
 
-  if (p.classList.contains("opacity-100")) {
-    p.classList.remove("opacity-100", "max-h-96");
-    p.classList.add("opacity-0", "max-h-0", "absolute", "-z-10");
-    e.classList.remove("opacity-0", "max-h-0", "absolute", "-z-10");
-    e.classList.add("opacity-100", "max-h-96");
-  } else {
-    p.classList.remove("opacity-0", "max-h-0", "absolute", "-z-10");
-    p.classList.add("opacity-100", "max-h-96");
-    e.classList.remove("opacity-100", "max-h-96", "absolute", "-z-10");
-    e.classList.add("opacity-0", "max-h-0");
-  }
-};
+function loadSections(sections) {
+  const container = document.getElementById("container");
 
-const updatecomponent = (name, e) => {
-  e.stopPropagation(); // Prevent event from bubbling up
-  const p = document.querySelector("#update");
-  const a = document.querySelector("#a");
-  const b = document.querySelector("#b");
-  const c = document.querySelector("#c");
+  sections
+    .slice()
+    .reverse()
+    .forEach((sec, index) => {
+      const wrapper = document.createElement("div");
+      wrapper.className = " flex gap-8 items-center";
 
-  a.classList.remove("border-blue-500", "border-b-2");
-  b.classList.remove("border-blue-500", "border-b-2");
-  c.classList.remove("border-blue-500", "border-b-2");
+      wrapper.innerHTML = sec.svg;
 
-  switch (name) {
-    case "a": {
-      p.innerText = "3000";
-      a.classList.add("border-blue-500", "border-b-2");
-      break;
-    }
-    case "b":
-      p.innerText = "2000";
-      b.classList.add("border-blue-500", "border-b-2");
-      break;
-    case "c":
-      p.innerText = "4";
-      c.classList.add("border-blue-500", "border-b-2");
-      break;
-    default:
-      p.innerText = "Unknown status";
-  }
-};
+      const btn = document.createElement("button");
+
+      const mapKey = Object.keys(sec.componentMap)[0];
+      const idPrimary = mapKey;
+      const idSecondary = mapKey + "-content";
+
+      btn.id = idPrimary;
+      btn.className =
+        "transition-all hover:text-blue-500 w-full bg-green-400  p-8  duration-300 ";
+      btn.innerText = sec.name;
+
+      const sectionBox = document.createElement("section");
+      sectionBox.id = idSecondary;
+      sectionBox.className =
+        "p-4 space-y-1 shadow-md border transition-all duration-300 opacity-100 ";
+      sectionBox.style = "scrollbar-width: none";
+
+      const title = document.createElement("p");
+      title.className = "text-3xl";
+      title.innerText = sec.name;
+
+      const contentText = document.createElement("p");
+      contentText.className = "text-sm";
+      contentText.innerHTML = sec.content.join("<br><br>");
+
+      sectionBox.appendChild(title);
+      sectionBox.appendChild(contentText);
+
+      wrapper.appendChild(btn);
+
+      container.prepend(sectionBox);
+      container.prepend(wrapper);
+    });
+}
 
 window.onload = () => {
   // Animate "moveDiv" if it exists
-  const div = document.getElementById("moveDiv");
-  if (div) {
-    div.classList.remove("translate-y-5", "opacity-0");
-    div.classList.add("translate-y-0", "opacity-100");
-  }
+  fetch("components.json")
+    .then((res) => res.json())
+    .then((data) => loadSections(data.page[0].section));
 
   // Animate all slide buttons
-  document.querySelectorAll(".slide-btn").forEach((btn) => {
-    btn.classList.remove("-translate-x-5", "opacity-0");
-    btn.classList.add("translate-x-0", "opacity-100");
+  document.querySelectorAll(".moveDiv").forEach((div) => {
+    div.classList.remove("translate-y-5", "opacity-0");
+    div.classList.add("translate-y-0", "opacity-100");
   });
+};
+
+const updatecomponent = (name, event) => {
+  event.stopPropagation();
+
+  const p = document.querySelector("#update");
+  const tabs = {
+    a: { el: "#a", value: "3000" },
+    b: { el: "#b", value: "2000" },
+    c: { el: "#c", value: "4" },
+  };
+
+  // Remove active border from all
+  Object.values(tabs).forEach((t) => {
+    document
+      .querySelector(t.el)
+      ?.classList.remove("border-blue-500", "border-b-2");
+  });
+
+  const selected = tabs[name];
+  if (!selected) return (p.innerText = "Unknown status");
+
+  p.innerText = selected.value;
+  document
+    .querySelector(selected.el)
+    ?.classList.add("border-blue-500", "border-b-2");
 };
 
 document.addEventListener("DOMContentLoaded", () => {
