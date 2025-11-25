@@ -62,6 +62,30 @@ window.onload = () => {
   });
 };
 
+function toggleText() {
+  const p = document.getElementById("myText");
+
+  if (p.style.display === "none") {
+    // show
+    p.style.display = "block";
+
+    // ensure animation starts AFTER display change
+    requestAnimationFrame(() => {
+      p.classList.remove("opacity-0", "translate-y-5");
+      p.classList.add("opacity-100", "translate-y-0");
+    });
+  } else {
+    // hide animation
+    p.classList.add("opacity-0", "translate-y-5");
+    p.classList.remove("opacity-100", "translate-y-0");
+
+    // hide after animation ends
+    setTimeout(() => {
+      p.style.display = "none";
+    }, 300); // match duration-300
+  }
+}
+
 const updatecomponent = (name, event) => {
   event.stopPropagation();
 
