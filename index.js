@@ -59,6 +59,21 @@ function loadSections(sections, relate) {
   });
 }
 
+// Generic function to load a component
+function loadComponent(id, file, callback) {
+  fetch(file)
+    .then((res) => res.text())
+    .then((html) => {
+      const container = document.getElementById(id);
+      container.innerHTML = html;
+
+      // Callback after component is loaded
+      if (callback) callback();
+    })
+    .catch((err) => console.error(`Failed to load ${file}:`, err));
+}
+
+// Wait until window fully loads
 window.onload = () => {
   // Animate "moveDiv" if it exists
   fetch("components.json")
@@ -70,51 +85,66 @@ window.onload = () => {
     div.classList.remove("translate-y-5", "opacity-0");
     div.classList.add("translate-y-0", "opacity-100");
   });
+  // Load Header
+  loadComponent("header", "/components/header.html");
+
+  // Load Nav and attach event listeners
+  loadComponent("nav", "/components/nav.html", () => {
+    const btn = document.getElementById("openBtn");
+    const menu = document.getElementById("menu");
+    const div = document.getElementById("slideDiv");
+    const closeBtn = document.getElementById("closeBtn");
+
+    function openPanel() {
+      div.classList.remove("max-h-0", "opacity-0", "-translate-y-10");
+      div.classList.add(
+        "md:max-h-120",
+        "max-h-160",
+        "opacity-100",
+        "translate-y-0"
+      );
+      menu.classList.add("translate-x-0", "opacity-100");
+      menu.classList.remove("-translate-x-5", "opacity-0");
+    }
+
+    function closePanel() {
+      div.classList.add("max-h-0", "opacity-0", "-translate-y-10");
+      div.classList.remove(
+        "md:max-h-120",
+        "max-h-160",
+        "opacity-100",
+        "translate-y-0"
+      );
+      menu.classList.add("-translate-x-5", "opacity-0");
+      menu.classList.remove("translate-x-0", "opacity-100");
+    }
+
+    btn.addEventListener("click", openPanel);
+    closeBtn.addEventListener("click", closePanel);
+  });
+
+  // Load Footer and attach its script (e.g., toggle privacy policy)
+  loadComponent("footer", "/components/footer.html", () => {
+    const toggleBtn = document.getElementById("myTextToggleBtn"); // Optional: assign an ID to your button
+    const text = document.getElementById("myText");
+
+    if (toggleBtn && text) {
+      toggleBtn.addEventListener("click", () => {
+        if (text.style.display === "none" || text.style.display === "") {
+          text.style.display = "block";
+          requestAnimationFrame(() => {
+            text.classList.remove("opacity-0", "translate-y-5");
+            text.classList.add("opacity-100", "translate-y-0");
+          });
+        } else {
+          text.classList.add("opacity-0", "translate-y-5");
+          text.classList.remove("opacity-100", "translate-y-0");
+          setTimeout(() => (text.style.display = "none"), 300);
+        }
+      });
+    }
+  });
 };
-
-function opencomponent(id) {
-  const img = document.getElementById("flower");
-  const btn = document.getElementById("introduction");
-
-  // If currently visible → hide it
-  if (img.classList.contains("opacity-100")) {
-    img.classList.add("opacity-0", "max-h-0");
-    img.classList.remove("opacity-100", "max-h-96");
-    btn.classList.add("opacity-0", "max-h-0");
-    btn.classList.remove("opacity-100", "max-h-96");
-  }
-  // If currently hidden → show it
-  else {
-    img.classList.remove("opacity-0", "max-h-0");
-    img.classList.add("opacity-100", "max-h-96");
-    btn.classList.remove("opacity-0", "max-h-0");
-    btn.classList.add("opacity-100", "max-h-96");
-  }
-}
-
-function toggleText() {
-  const p = document.getElementById("myText");
-
-  if (p.style.display === "none") {
-    // show
-    p.style.display = "block";
-
-    // ensure animation starts AFTER display change
-    requestAnimationFrame(() => {
-      p.classList.remove("opacity-0", "translate-y-5");
-      p.classList.add("opacity-100", "translate-y-0");
-    });
-  } else {
-    // hide animation
-    p.classList.add("opacity-0", "translate-y-5");
-    p.classList.remove("opacity-100", "translate-y-0");
-
-    // hide after animation ends
-    setTimeout(() => {
-      p.style.display = "none";
-    }, 300); // match duration-300
-  }
-}
 
 const updatecomponent = (name, event) => {
   event.stopPropagation();
@@ -143,35 +173,6 @@ const updatecomponent = (name, event) => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("openBtn");
-  const menu = document.getElementById("menu");
-  const closeBtn = document.getElementById("closeBtn");
-  const div = document.getElementById("slideDiv");
-
-  function openPanel() {
-    div.classList.remove("max-h-0", "opacity-0", "-translate-y-10");
-    div.classList.add(
-      "md:max-h-120",
-      "max-h-160",
-      "opacity-100",
-      "translate-y-0"
-    );
-    menu.classList.add("translate-x-0", "opacity-100");
-    menu.classList.remove("-translate-x-5", "opacity-0");
-  }
-
-  function closePanel() {
-    div.classList.add("max-h-0", "opacity-0", "-translate-y-10");
-    div.classList.remove(
-      "md:max-h-120",
-      "max-h-160",
-      "opacity-100",
-      "translate-y-0"
-    );
-    menu.classList.add("-translate-x-5", "opacity-0");
-    menu.classList.remove("translate-x-0", "opacity-100");
-  }
-
   const moveOn = document.getElementById("moveOn");
 
   const observer = new IntersectionObserver(
@@ -183,14 +184,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     },
-    { threshold: 0.1 }
+    { threshold: 0.7 }
   );
 
   observer.observe(moveOn);
-
-  btn.addEventListener("click", openPanel);
-  closeBtn.addEventListener("click", closePanel);
-  // document.getElementById("openBtn").click();
 
   const instance = document.getElementById("instance");
   if (!instance) return;
