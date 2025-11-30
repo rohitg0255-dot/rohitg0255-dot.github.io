@@ -2,8 +2,9 @@
 // GENERATOR FUNCTION
 // =========================
 
-function loadSections(sections) {
+function loadSections(sections, relate) {
   const container = document.getElementById("container");
+  const articles = document.getElementById("relate");
 
   sections
     .slice()
@@ -28,18 +29,20 @@ function loadSections(sections) {
       const sectionBox = document.createElement("section");
       sectionBox.id = idSecondary;
       sectionBox.className =
-        "p-4 space-y-1 shadow-md border transition-all duration-300 opacity-100 ";
+        "p-4 space-y-1 shadodw-md  transition-all duration-300 opacity-100 ";
       sectionBox.style = "scrollbar-width: none";
 
       const title = document.createElement("p");
       title.className = "text-3xl";
       title.innerText = sec.name;
 
+      const hr = document.createElement("hr");
       const contentText = document.createElement("p");
       contentText.className = "text-sm";
       contentText.innerHTML = sec.content.join("<br><br>");
 
       sectionBox.appendChild(title);
+      sectionBox.appendChild(hr);
       sectionBox.appendChild(contentText);
 
       wrapper.appendChild(btn);
@@ -47,13 +50,20 @@ function loadSections(sections) {
       container.prepend(sectionBox);
       container.prepend(wrapper);
     });
+
+  relate.forEach((rel, index) => {
+    const a = document.createElement("a");
+    a.className = "text-center block p-2 shadow-md bg-white text-gray-600";
+    a.innerText = rel;
+    articles.append(a);
+  });
 }
 
 window.onload = () => {
   // Animate "moveDiv" if it exists
   fetch("components.json")
     .then((res) => res.json())
-    .then((data) => loadSections(data.page[0].section));
+    .then((data) => loadSections(data.page[0].section, data.page[0].relate));
 
   // Animate all slide buttons
   document.querySelectorAll(".moveDiv").forEach((div) => {
@@ -61,6 +71,26 @@ window.onload = () => {
     div.classList.add("translate-y-0", "opacity-100");
   });
 };
+
+function opencomponent(id) {
+  const img = document.getElementById("flower");
+  const btn = document.getElementById("introduction");
+
+  // If currently visible → hide it
+  if (img.classList.contains("opacity-100")) {
+    img.classList.add("opacity-0", "max-h-0");
+    img.classList.remove("opacity-100", "max-h-96");
+    btn.classList.add("opacity-0", "max-h-0");
+    btn.classList.remove("opacity-100", "max-h-96");
+  }
+  // If currently hidden → show it
+  else {
+    img.classList.remove("opacity-0", "max-h-0");
+    img.classList.add("opacity-100", "max-h-96");
+    btn.classList.remove("opacity-0", "max-h-0");
+    btn.classList.add("opacity-100", "max-h-96");
+  }
+}
 
 function toggleText() {
   const p = document.getElementById("myText");
@@ -141,6 +171,22 @@ document.addEventListener("DOMContentLoaded", () => {
     menu.classList.add("-translate-x-5", "opacity-0");
     menu.classList.remove("translate-x-0", "opacity-100");
   }
+
+  const moveOn = document.getElementById("moveOn");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          moveOn.classList.remove("opacity-0", "translate-y-5");
+          moveOn.classList.add("opacity-100", "translate-y-0");
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  observer.observe(moveOn);
 
   btn.addEventListener("click", openPanel);
   closeBtn.addEventListener("click", closePanel);

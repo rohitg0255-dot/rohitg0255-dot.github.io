@@ -44,6 +44,11 @@
             "4. JavaScript: The behavior and interactivity of the page. Adds logic and functionality to web pages. Can update content without reloading the page (dynamic). Think of JavaScript as the brain of the page."
           ]
         }
+      ],
+      "relate": [
+        "Cloud Computing",
+        "Blockchain and Cryptography",
+        "Linux : Shell Scripting"
       ]
     }
   ]

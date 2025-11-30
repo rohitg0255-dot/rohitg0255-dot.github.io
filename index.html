@@ -21,6 +21,7 @@
       smarter, faster, <span class="text-xl"> harder</span> to break,
       <span class="text-xl">and slightly terrified of my next commit</span>.
     </p>
+
     <div
       id="slideDiv"
       class="fixed z-100 top-0 left-0 right-0 max-h-0 overflow-hidden overflow-y-auto scroll-1 bg-white shadow-lg transition-all duration-500 ease-out opacity-0 -translate-y-10"
@@ -40,7 +41,7 @@
       <section class="px-4">
         <p class="text-3xl">Courses</p>
         <p class="text-sm">
-          Dive into a world of learning that’s built for innovators. Our
+          Dive into a world of learning that’s built for innovators. This
           platform brings you professionally curated, high-quality courses
           designed to elevate your skills—from foundational coding principles to
           advanced software engineering practices. Every learning path is
@@ -227,11 +228,11 @@
     </nav>
 
     <main
-      class="m-4 moveDiv flex items-center relative justify-center transition-all duration-500 ease-out translate-y-5 opacity-0"
+      class="moveDiv bg-white shadow-md flex items-center relative justify-center transition-all duration-500 ease-out translate-y-5 opacity-0"
     >
       <main
         id="container"
-        class="cursor-default p-4 space-y-8 bg-white rounded-xl shadow-md max-w-4xl"
+        class="cursor-default p-2 sm:p-4 space-y-8 max-w-5xl"
       >
         <div class="flex gap-8 items-center">
           <?xml version="1.0" encoding="utf-8"?><svg
@@ -262,11 +263,12 @@
         </div>
 
         <section
-          class="p-4 space-y-1 shadow-md border transition-all duration-300 opacity-100"
+          class="p-4 space-y-1 transition-all duration-300 opacity-100"
           id="real-content"
           style="scrollbar-width: none"
         >
           <p class="text-3xl">Real time Component</p>
+          <hr />
           <div class="flex gap-5">
             <p
               id="a"
@@ -315,6 +317,19 @@
         </section>
       </main>
     </main>
+
+    <section
+      id="moveOn"
+      class="bg-green-400 text-white p-1 space-y-4 mt-6 opacity-0 translate-y-5 transition-all duration-700"
+    >
+      <p class="text-5xl">You may also like ...</p>
+      <hr class="border-2 border-white" />
+      <div id="relate" class="flex flex-wrap gap-6 text-sm md:p-6"></div>
+      <p>
+        Find more content related to what you're reading now, and share it with
+        others if you like it.
+      </p>
+    </section>
 
     <section
       class="flex items-center sm:gap-16 mx-auto max-w-6xl m-16 rounded-3xl space-y-4 bg-white"
