@@ -2,6 +2,8 @@
   "page": [
     {
       "id": "home",
+      "name": "Full Stack Development",
+      "description": "Full Stack Development is the end-to-end development of web applications, where a developer handles the client-side (front-end), server-side (back-end), APIs, databases, and deployment infrastructure. A full stack developer is capable of building an entire functional product from UI to server logic and managing deployment.",
 
       "section": [
         {

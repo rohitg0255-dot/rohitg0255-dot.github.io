@@ -23,26 +23,19 @@ function loadSections(sections, relate) {
 
       btn.id = idPrimary;
       btn.className =
-        "transition-all hover:text-blue-500 w-full bg-green-400  p-8  duration-300 ";
+        "transition-all hover:text-blue-500 w-full bg-green-400  p-4   duration-300 ";
       btn.innerText = sec.name;
 
       const sectionBox = document.createElement("section");
       sectionBox.id = idSecondary;
       sectionBox.className =
-        "p-4 space-y-1 shadodw-md  transition-all duration-300 opacity-100 ";
+        "space-y-1 shadodw-md p-4  transition-all duration-300 opacity-100 ";
       sectionBox.style = "scrollbar-width: none";
 
-      const title = document.createElement("p");
-      title.className = "text-3xl";
-      title.innerText = sec.name;
-
-      const hr = document.createElement("hr");
       const contentText = document.createElement("p");
       contentText.className = "text-sm";
       contentText.innerHTML = sec.content.join("<br><br>");
 
-      sectionBox.appendChild(title);
-      sectionBox.appendChild(hr);
       sectionBox.appendChild(contentText);
 
       wrapper.appendChild(btn);
@@ -78,7 +71,17 @@ window.onload = () => {
   // Animate "moveDiv" if it exists
   fetch("components.json")
     .then((res) => res.json())
-    .then((data) => loadSections(data.page[0].section, data.page[0].relate));
+    .then((data) => {
+      const memo = document.getElementById("memo");
+
+      memo.innerHTML = `
+      <p class="text-5xl text-center">${data.page[0].name}</p>
+      <hr>
+      <p class="text-sm">${data.page[0].description}</p>
+    `;
+
+      loadSections(data.page[0].section, data.page[0].relate);
+    });
 
   // Animate all slide buttons
   document.querySelectorAll(".moveDiv").forEach((div) => {
@@ -152,8 +155,8 @@ const updatecomponent = (name, event) => {
   const p = document.querySelector("#update");
   const tabs = {
     a: { el: "#a", value: "3000" },
-    b: { el: "#b", value: "2000" },
-    c: { el: "#c", value: "4" },
+    b: { el: "#b", value: "2639" },
+    c: { el: "#c", value: "46" },
   };
 
   // Remove active border from all
