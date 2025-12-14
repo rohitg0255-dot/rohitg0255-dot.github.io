@@ -35,14 +35,11 @@ window.onload = () => {
 
         domAnimate();
 
-        const memo = document.getElementById("memo");
+        const name = document.getElementById("name");
+        const description = document.getElementById("description");
         console.log(page);
-
-        memo.innerHTML = `
-         <p class="text-5xl text-center">${result.name}</p>
-         <hr>
-         <p class="text-base text-gray-800">${result.description}</p>
-    `;
+        name.textContent = result.name;
+        description.textContent = result.description;
 
         loadSections(result.section, result.relate);
       });
@@ -77,5 +74,3 @@ export const updatecomponent = (name, event) => {
 
 // expose to window so HTML inline onclick works
 window.updatecomponent = updatecomponent;
-
-document.addEventListener("DOMContentLoaded", () => {});
