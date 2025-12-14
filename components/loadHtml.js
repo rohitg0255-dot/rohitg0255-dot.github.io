@@ -7,6 +7,8 @@ const pov = (program, contentText, item) => {
     program.value += `${item.code}\n`;
   } else {
     if (program.value.length > 0) {
+      const codeText = program.value; // ✅ SNAPSHOT
+
       const wrapper = document.createElement("div");
       wrapper.className = "relative max-w-full";
 
@@ -15,8 +17,8 @@ const pov = (program, contentText, item) => {
         "max-w-full overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm text-gray-100 font-mono shadow-inner";
 
       const code = document.createElement("code");
-      code.className = "block whitespace-pre-wrap break-words";
-      code.textContent = program.value;
+      code.className = "block whitespace-pre-wrap select-text break-words";
+      code.textContent = codeText;
 
       pre.appendChild(code);
 
@@ -28,7 +30,8 @@ const pov = (program, contentText, item) => {
 
       copyBtn.addEventListener("click", async () => {
         try {
-          await navigator.clipboard.writeText(program.value);
+          console.log(codeText);
+          await navigator.clipboard.writeText(codeText);
           copyBtn.textContent = "Copied!";
           setTimeout(() => (copyBtn.textContent = "Copy"), 1500);
         } catch {
@@ -40,7 +43,7 @@ const pov = (program, contentText, item) => {
       wrapper.appendChild(pre);
       contentText.appendChild(wrapper);
 
-      program.value = "";
+      program.value = ""; // reset AFTER snapshot
     }
 
     if (item.head) {
