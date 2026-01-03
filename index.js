@@ -10,10 +10,12 @@ window.onload = () => {
   const mappings = {
     index: "home",
     "cloud-deployment": "cloud-deployment",
+    "shell-scripting": "shell-scripting",
+    "sw-eng": "sw-erng",
   };
 
-  let file = window.location.pathname.split("/").pop(); // "about.html"
-  file = file.replace(".html", ""); // "about"
+  let file = window.location.pathname.split("/").pop(); // "shell-scripting.html"
+  file = file.replace(".html", ""); // "shell-scripting"
 
   console.log(file);
 

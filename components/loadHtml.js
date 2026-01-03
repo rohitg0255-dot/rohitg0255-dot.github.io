@@ -2,47 +2,49 @@
 // GENERATOR FUNCTION
 // =========================
 
+const appendProgram = (value, contentText) => {
+  const codeText = value; // ✅ SNAPSHOT
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "relative max-w-full";
+
+  const pre = document.createElement("pre");
+  pre.className =
+    "max-w-full overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm text-gray-100 font-mono shadow-inner";
+
+  const code = document.createElement("code");
+  code.className = "block whitespace-pre-wrap select-text break-words";
+  code.textContent = codeText;
+
+  pre.appendChild(code);
+
+  /* Copy button */
+  const copyBtn = document.createElement("button");
+  copyBtn.textContent = "Copy";
+  copyBtn.className =
+    "absolute top-2 right-2 rounded-md bg-gray-700 px-2 py-1 text-xs text-gray-100 hover:bg-gray-600 active:scale-95 transition";
+
+  copyBtn.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(codeText);
+      copyBtn.textContent = "Copied!";
+      setTimeout(() => (copyBtn.textContent = "Copy"), 1500);
+    } catch {
+      copyBtn.textContent = "Failed";
+    }
+  });
+
+  wrapper.appendChild(copyBtn);
+  wrapper.appendChild(pre);
+  contentText.appendChild(wrapper);
+};
+
 const pov = (program, contentText, item) => {
   if (item.code) {
     program.value += `${item.code}\n`;
   } else {
     if (program.value.length > 0) {
-      const codeText = program.value; // ✅ SNAPSHOT
-
-      const wrapper = document.createElement("div");
-      wrapper.className = "relative max-w-full";
-
-      const pre = document.createElement("pre");
-      pre.className =
-        "max-w-full overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm text-gray-100 font-mono shadow-inner";
-
-      const code = document.createElement("code");
-      code.className = "block whitespace-pre-wrap select-text break-words";
-      code.textContent = codeText;
-
-      pre.appendChild(code);
-
-      /* Copy button */
-      const copyBtn = document.createElement("button");
-      copyBtn.textContent = "Copy";
-      copyBtn.className =
-        "absolute top-2 right-2 rounded-md bg-gray-700 px-2 py-1 text-xs text-gray-100 hover:bg-gray-600 active:scale-95 transition";
-
-      copyBtn.addEventListener("click", async () => {
-        try {
-          console.log(codeText);
-          await navigator.clipboard.writeText(codeText);
-          copyBtn.textContent = "Copied!";
-          setTimeout(() => (copyBtn.textContent = "Copy"), 1500);
-        } catch {
-          copyBtn.textContent = "Failed";
-        }
-      });
-
-      wrapper.appendChild(copyBtn);
-      wrapper.appendChild(pre);
-      contentText.appendChild(wrapper);
-
+      appendProgram(program.value, contentText);
       program.value = ""; // reset AFTER snapshot
     }
 
@@ -123,6 +125,9 @@ export const loadSections = (sections, relate) => {
       let program = { value: "" };
 
       sec.content.explain.text.forEach(pov.bind(null, program, contentText));
+      if (program.value.length > 0) {
+        appendProgram(program.value, contentText);
+      }
     }
 
     // ---------------------------------------
@@ -142,6 +147,9 @@ export const loadSections = (sections, relate) => {
       let program = { value: "" };
 
       sec.content.plan.text.forEach(pov.bind(null, program, contentText));
+      if (program.value.length > 0) {
+        appendProgram(program.value, contentText);
+      }
     }
 
     // ADD CONTENT INTO SECTION
@@ -151,55 +159,7 @@ export const loadSections = (sections, relate) => {
     if (sec.content.plan?.stoner) {
       const file = sec.content.plan?.stoner;
 
-      loadComponent(idSecondary, `/components/${file}`, () => {
-        const instance = document.getElementById("instance");
-        if (!instance) return;
-        for (let i = 0; i < 50; i++) {
-          const newDiv = document.createElement("div");
-
-          // Set random opacity between 0 and 1
-          const opacity = Math.random();
-
-          // Apply styles to the new div
-          newDiv.classList.add(
-            "w-4",
-            "h-4",
-            "bg-yellow-500",
-            "rounded",
-            "transition-opacity",
-            "duration-1000"
-          );
-          newDiv.style.opacity = opacity;
-
-          // Append the new div to the instance container
-          instance.appendChild(newDiv);
-        }
-
-        setInterval(() => {
-          // Clear all child elements
-          instance.innerHTML = "";
-          for (let i = 0; i < 50; i++) {
-            const newDiv = document.createElement("div");
-
-            // Set random opacity between 0 and 1
-            const opacity = Math.random();
-
-            // Apply styles to the new div
-            newDiv.classList.add(
-              "w-4",
-              "h-4",
-              "bg-yellow-500",
-              "rounded",
-              "transition-opacity",
-              "duration-1000"
-            );
-            newDiv.style.opacity = opacity;
-
-            // Append the new div to the instance container
-            instance.appendChild(newDiv);
-          }
-        }, 2100);
-      });
+      loadComponent(idSecondary, `/components/${file}`);
     }
 
     // PREPEND BOTH IN ORDER
@@ -213,7 +173,8 @@ export const loadSections = (sections, relate) => {
   relate.forEach((rel) => {
     const a = document.createElement("a");
     a.className = "text-center block p-2 shadow-md bg-white text-gray-600";
-    a.innerText = rel;
+    a.innerText = rel[0];
+    if (rel[1]) a.href = rel[1];
     articles.append(a);
   });
 };
